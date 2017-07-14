@@ -135,7 +135,7 @@ int main(int argc, char *argv[]) {
 	MYSQL *conn;
 	conn= mysql_init(NULL);
 
-	configure_connection(conn,"myloader");
+    configure_connection(conn,"myloader");
 
 	if (!mysql_real_connect(conn, hostname, username, password, NULL, port, socket_path, 0)) {
 		g_critical("Error connection to database: %s", mysql_error(conn));
@@ -407,7 +407,10 @@ void *process_queue(struct thread_data *td) {
 	MYSQL *thrconn= mysql_init(NULL);
 	g_mutex_unlock(init_mutex);
 
-	configure_connection(thrconn,"myloader");
+    configure_connection(thrconn,"myloader");
+
+	if (compress_protocol)
+		mysql_options(thrconn, MYSQL_OPT_COMPRESS, NULL);
 
 	if (!mysql_real_connect(thrconn, hostname, username, password, NULL, port, socket_path, 0)) {
 		g_critical("Failed to connect to MySQL server: %s", mysql_error(thrconn));

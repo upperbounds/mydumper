@@ -1,4 +1,4 @@
-/* 
+/*
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
@@ -42,7 +42,7 @@ void configure_connection(MYSQL *conn, const char *name) {
 	if (ssl == 1) {
 		i = SSL_MODE_REQUIRED;
 	} else {
-		i = SSL_MODE_DISABLED;
+		i = !SSL_MODE_REQUIRED;
 	}
 
 	mysql_options(conn,MYSQL_OPT_SSL_MODE,&i);
